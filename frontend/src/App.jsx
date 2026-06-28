@@ -32,8 +32,12 @@ function App() {
   useEffect(() => {
     fetchStats();
     fetchThreats();
-    const interval = setInterval(fetchStats, 5000);
-    return () => clearInterval(interval);
+    const statsInterval = setInterval(fetchStats, 5000);
+    const threatsInterval = setInterval(fetchThreats, 3000);
+    return () => {
+      clearInterval(statsInterval);
+      clearInterval(threatsInterval);
+    };
   }, []);
 
   return (
