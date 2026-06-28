@@ -1,5 +1,6 @@
 from scapy.all import sniff, IP, TCP, UDP, ICMP
 from detection.rules import analyze_packet
+from detection.ml_detector import detect_anomaly
 from models.log_model import create_log, create_packet_log
 from alerts.notifier import notify
 import sys
@@ -43,6 +44,10 @@ def process_packet(packet):
             db.packets.insert_one(create_packet_log(src_ip, dst_ip, protocol, src_port, dst_port, size))
 
         threats = analyze_packet(src_ip, dst_ip, protocol, src_port, dst_port, flags, icmp)
+
+        ml_threat = detect_anomaly(src_ip, dst_ip, dst_port, protocol, size)
+        if ml_threat:
+            threats.append(ml_threat)
 
         for threat in threats:
             log = create_log(
