@@ -7,18 +7,6 @@ const severityColor = {
   LOW: "bg-green-500/20 text-green-400 border-green-500/30",
 };
 
-const typeIcon = {
-  PORT_SCAN: "??",
-  SYN_FLOOD: "??",
-  BRUTE_FORCE: "??",
-  ICMP_FLOOD: "??",
-  UDP_FLOOD: "??",
-  DNS_AMPLIFICATION: "??",
-  NULL_SCAN: "??",
-  XMAS_SCAN: "??",
-  ML_ANOMALY: "??",
-};
-
 export default function ThreatList({ threats }) {
   return (
     <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
@@ -36,9 +24,7 @@ export default function ThreatList({ threats }) {
             return (
               <div key={i} className={`border rounded-md p-3 ${severityColor[threat.severity] || "bg-gray-700 text-gray-300 border-gray-600"}`}>
                 <div className="flex justify-between items-start">
-                  <span className="font-medium text-sm">
-                    {typeIcon[threatType] || "??"} {threatType}
-                  </span>
+                  <span className="font-medium text-sm">{threatType}</span>
                   <span className="text-xs opacity-70">{threat.severity}</span>
                 </div>
                 <p className="text-xs mt-1 opacity-80">{threat.details}</p>
